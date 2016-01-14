@@ -9,3 +9,9 @@ struct User {
     let name: String
     let avatarURL: NSURL
 }
+
+extension User: Equatable {}
+func ==(lhs: User, rhs: User) -> Bool {
+    return lhs.name == rhs.name &&
+        lhs.avatarURL == rhs.avatarURL
+}
