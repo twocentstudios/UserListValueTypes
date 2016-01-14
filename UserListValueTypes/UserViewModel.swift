@@ -4,3 +4,9 @@
 //
 
 import Foundation
+
+struct UserViewModel {
+    let user: User
+    let name: String
+    let avatarImageData: NSData?
+}
