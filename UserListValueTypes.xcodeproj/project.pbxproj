@@ -8,9 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		348563411C4761F000D91BD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563401C4761F000D91BD1 /* AppDelegate.swift */; };
-		348563431C4761F000D91BD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563421C4761F000D91BD1 /* ViewController.swift */; };
+		348563431C4761F000D91BD1 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563421C4761F000D91BD1 /* UsersViewController.swift */; };
 		348563481C4761F000D91BD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 348563471C4761F000D91BD1 /* Assets.xcassets */; };
 		3485634B1C4761F000D91BD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 348563491C4761F000D91BD1 /* LaunchScreen.storyboard */; };
+		348563531C4762D000D91BD1 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563521C4762D000D91BD1 /* UsersViewModel.swift */; };
+		348563551C4762EE00D91BD1 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563541C4762EE00D91BD1 /* UserViewModel.swift */; };
+		348563571C4762FA00D91BD1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563561C4762FA00D91BD1 /* User.swift */; };
+		348563591C47630200D91BD1 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563581C47630200D91BD1 /* ImageController.swift */; };
+		3485635B1C47630A00D91BD1 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3485635A1C47630A00D91BD1 /* UserController.swift */; };
+		3485635D1C47633200D91BD1 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3485635C1C47633200D91BD1 /* UserCell.swift */; };
 		A0F6E4ECFF5CDDDE7053853A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F0AC1D5B843CF67E684378 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -18,10 +24,16 @@
 		0FA3EA272D9D16B8BC5EB434 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		3485633D1C4761F000D91BD1 /* UserListValueTypes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserListValueTypes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		348563401C4761F000D91BD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		348563421C4761F000D91BD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		348563421C4761F000D91BD1 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		348563471C4761F000D91BD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3485634A1C4761F000D91BD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3485634C1C4761F000D91BD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		348563521C4762D000D91BD1 /* UsersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
+		348563541C4762EE00D91BD1 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		348563561C4762FA00D91BD1 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		348563581C47630200D91BD1 /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
+		3485635A1C47630A00D91BD1 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		3485635C1C47633200D91BD1 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		A2C8AFD9CBA6FE497E6E5A54 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B2F0AC1D5B843CF67E684378 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -60,7 +72,13 @@
 			isa = PBXGroup;
 			children = (
 				348563401C4761F000D91BD1 /* AppDelegate.swift */,
-				348563421C4761F000D91BD1 /* ViewController.swift */,
+				348563421C4761F000D91BD1 /* UsersViewController.swift */,
+				3485635C1C47633200D91BD1 /* UserCell.swift */,
+				348563521C4762D000D91BD1 /* UsersViewModel.swift */,
+				348563541C4762EE00D91BD1 /* UserViewModel.swift */,
+				3485635A1C47630A00D91BD1 /* UserController.swift */,
+				348563561C4762FA00D91BD1 /* User.swift */,
+				348563581C47630200D91BD1 /* ImageController.swift */,
 				348563471C4761F000D91BD1 /* Assets.xcassets */,
 				348563491C4761F000D91BD1 /* LaunchScreen.storyboard */,
 				3485634C1C4761F000D91BD1 /* Info.plist */,
@@ -206,8 +224,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				348563431C4761F000D91BD1 /* ViewController.swift in Sources */,
+				3485635D1C47633200D91BD1 /* UserCell.swift in Sources */,
+				348563431C4761F000D91BD1 /* UsersViewController.swift in Sources */,
+				348563551C4762EE00D91BD1 /* UserViewModel.swift in Sources */,
+				348563531C4762D000D91BD1 /* UsersViewModel.swift in Sources */,
+				348563571C4762FA00D91BD1 /* User.swift in Sources */,
+				3485635B1C47630A00D91BD1 /* UserController.swift in Sources */,
 				348563411C4761F000D91BD1 /* AppDelegate.swift in Sources */,
+				348563591C47630200D91BD1 /* ImageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
