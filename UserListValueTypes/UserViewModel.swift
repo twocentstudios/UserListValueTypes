@@ -15,6 +15,10 @@ struct UserViewModel {
         self.name = user.name
         self.avatarImageData = avatarImageData
     }
+    
+    func shouldFetchImage() -> Bool {
+        return avatarImageData == nil
+    }
 }
 
 extension UserViewModel: Identifiable {}
