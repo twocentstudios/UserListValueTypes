@@ -4,19 +4,64 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
-class ViewController: UIViewController {
+class UsersViewController: UITableViewController {
 
+    let usersViewModel: UsersViewModel
+    
+    init(usersViewModel: UsersViewModel) {
+        self.usersViewModel = usersViewModel
+        super.init(style: .Plain)
+        
+        title = "User List"
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        tableView.registerClass(UserCell.self, forCellReuseIdentifier: UserCell.reuseIdentifier)
+        tableView.rowHeight = 70
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        usersViewModel.reloadSignal
+            .observeOn(UIScheduler())
+            .observeNext { [weak tableView] _ in
+                tableView?.reloadData()
+            }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        usersViewModel.fetchUserViewModels()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
+    
+    // MARK: - UITableViewDataSource
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return usersViewModel.userViewModels?.count ?? 0
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(UserCell.reuseIdentifier, forIndexPath: indexPath)
+        return cell
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = cell as! UserCell
+        cell.userViewModel = usersViewModel.userViewModels?[indexPath.row]
+        usersViewModel.activateIndexPath(indexPath)
+    }
 
 }
 
