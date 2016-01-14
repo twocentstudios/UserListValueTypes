@@ -10,3 +10,8 @@ struct UserViewModel {
     let name: String
     let avatarImageData: NSData?
 }
+
+extension UserViewModel: Identifiable {}
+func =~=(lhs: UserViewModel, rhs: UserViewModel) -> Bool {
+    return lhs.user == rhs.user
+}
