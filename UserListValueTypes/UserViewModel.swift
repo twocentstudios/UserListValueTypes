@@ -9,6 +9,12 @@ struct UserViewModel {
     let user: User
     let name: String
     let avatarImageData: NSData?
+    
+    init(user: User, avatarImageData: NSData?) {
+        self.user = user
+        self.name = user.name
+        self.avatarImageData = avatarImageData
+    }
 }
 
 extension UserViewModel: Identifiable {}
