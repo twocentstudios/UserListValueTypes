@@ -34,6 +34,12 @@ class UsersViewController: UITableViewController {
             .observeNext { [weak tableView] _ in
                 tableView?.reloadData()
             }
+        
+        usersViewModel.reloadIndexPathsSignal
+            .observeOn(UIScheduler())
+            .observeNext { [weak tableView] indexPaths in
+                tableView?.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+            }
     }
     
     override func viewDidAppear(animated: Bool) {
