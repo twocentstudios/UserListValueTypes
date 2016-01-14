@@ -10,7 +10,7 @@ class UserController {
     func fetchRandomUsers(count: Int = 100) -> [User] {
         return (0..<count).map { i in
             let name = LoremIpsum.name()
-            let avatarURL = LoremIpsum.URLForPlaceholderImageFromService(.Hhhhold, withSize:CGSize(width: 96, height:96)).URLByAppendingPathComponent("jpg?test=\(i)")
+            let avatarURL = NSURL(string: "http://dummyimage.com/96x96/000/fff.jpg&text=\(i)")!
             let user = User(name: name, avatarURL: avatarURL)
             return user
         }
