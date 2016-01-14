@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		345FE1231C47687500EA0697 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345FE1221C47687500EA0697 /* Identifiable.swift */; };
 		348563411C4761F000D91BD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563401C4761F000D91BD1 /* AppDelegate.swift */; };
 		348563431C4761F000D91BD1 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348563421C4761F000D91BD1 /* UsersViewController.swift */; };
 		348563481C4761F000D91BD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 348563471C4761F000D91BD1 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		0FA3EA272D9D16B8BC5EB434 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		345FE1221C47687500EA0697 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		3485633D1C4761F000D91BD1 /* UserListValueTypes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserListValueTypes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		348563401C4761F000D91BD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		348563421C4761F000D91BD1 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				3485635A1C47630A00D91BD1 /* UserController.swift */,
 				348563561C4762FA00D91BD1 /* User.swift */,
 				348563581C47630200D91BD1 /* ImageController.swift */,
+				345FE1221C47687500EA0697 /* Identifiable.swift */,
 				3485635E1C47657800D91BD1 /* UserListValueTypes-Bridging-Header.h */,
 				348563471C4761F000D91BD1 /* Assets.xcassets */,
 				348563491C4761F000D91BD1 /* LaunchScreen.storyboard */,
@@ -230,6 +233,7 @@
 				348563431C4761F000D91BD1 /* UsersViewController.swift in Sources */,
 				348563551C4762EE00D91BD1 /* UserViewModel.swift in Sources */,
 				348563531C4762D000D91BD1 /* UsersViewModel.swift in Sources */,
+				345FE1231C47687500EA0697 /* Identifiable.swift in Sources */,
 				348563571C4762FA00D91BD1 /* User.swift in Sources */,
 				3485635B1C47630A00D91BD1 /* UserController.swift in Sources */,
 				348563411C4761F000D91BD1 /* AppDelegate.swift in Sources */,
