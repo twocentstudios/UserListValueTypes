@@ -10,6 +10,7 @@ struct User {
     let avatarURL: NSURL
 }
 
+/// User must conform to equatable in order for our Identifiable protocol in the ViewModel layer to function.
 extension User: Equatable {}
 func ==(lhs: User, rhs: User) -> Bool {
     return lhs.name == rhs.name &&
