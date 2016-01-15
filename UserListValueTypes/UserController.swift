@@ -4,10 +4,18 @@
 //
 
 import Foundation
+import ReactiveCocoa
 import LoremIpsum
 
 class UserController {
-    func fetchRandomUsers(count: Int = 100) -> [User] {
+    func fetchRandomUsersProducer(count: Int = 100) -> SignalProducer<[User], NoError> {
+        return SignalProducer { observer, disposable in
+            observer.sendNext(UserController.fetchRandomUsers(count))
+            observer.sendCompleted()
+        }
+    }
+    
+    private static func fetchRandomUsers(count: Int) -> [User] {
         return (0..<count).map { i in
             let name = LoremIpsum.name()
             let avatarURL = NSURL(string: "http://dummyimage.com/96x96/000/fff.jpg&text=\(i)")!
