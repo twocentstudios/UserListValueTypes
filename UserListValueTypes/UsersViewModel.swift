@@ -28,28 +28,22 @@ class UsersViewModel {
         let imageQueue = QueueScheduler(qos: QOS_CLASS_DEFAULT, name: "com.twocentstudios.UserList.image")
 
         fetchUserViewModelsAction = Action { _ in
-            return SignalProducer { observer, disposable in
-                let users = userController.fetchRandomUsers(100)
-                observer.sendNext(users)
-                observer.sendCompleted()
-            }
-            .map { (users: [User]) -> [UserViewModel] in
-                return users.map { user in
-                    return UserViewModel(user: user, avatarImageData: nil)
+            return SignalProducer(value: 100)
+                .observeOn(workQueue)
+                .flatMap(.Latest, transform: userController.fetchRandomUsersProducer)
+                .map { (users: [User]) -> [UserViewModel] in
+                    return users.map { user in
+                        return UserViewModel(user: user)
+                    }
                 }
-            }
-            .startOn(workQueue)
         }
         
         fetchUserViewModelImageProducer = { userViewModel in
-            return SignalProducer { observer, disposable in
-                let avatarURL = userViewModel.user.avatarURL
-                let data = imageController.loadImageData(avatarURL)
-                let loadedUserViewModel = UserViewModel(user: userViewModel.user, avatarImageData: data)
-                observer.sendNext(loadedUserViewModel)
-                observer.sendCompleted()
-            }
-            .startOn(imageQueue)
+            return SignalProducer(value: userViewModel.avatarImageData.input)
+                .observeOn(imageQueue)
+                .flatMap(.Latest, transform: imageController.loadImageDataProducer)
+                .map(userViewModel.withData)
+                .flatMapError { SignalProducer(value: userViewModel.withError($0)) }
         }
         
         fetchUserViewModelsAction.values
@@ -66,7 +60,7 @@ class UsersViewModel {
     
     func activateIndexPath(indexPath: NSIndexPath) {
         guard let userViewModel = userViewModels?[indexPath.row] else { return }
-        if userViewModel.shouldFetchImage() {
+        if userViewModel.shouldFetchAvatarImage() {
             fetchUserViewModelImageProducer(userViewModel)
                 .observeOn(viewModelsQueue)
                 .startWithNext { [weak self] userViewModel in
@@ -86,4 +80,6 @@ class UsersViewModel {
                 }
         }
     }
+    
+    
 }

@@ -11,7 +11,14 @@ class UserCell: UITableViewCell {
     var userViewModel: UserViewModel? {
         didSet {
             self.textLabel?.text = userViewModel?.name ?? ""
-            self.imageView?.image = userViewModel?.avatarImageData.flatMap { UIImage(data: $0) } ?? UIImage(named: "placeholder")
+            self.imageView?.image = userViewModel.flatMap { viewModel in
+                switch viewModel.avatarImageData.output {
+                case .Empty: return UIImage(named: "placeholder")
+                case .Error: return nil
+                case .Loaded(let data): return UIImage(data: data)
+                case .Loading: return UIImage(named: "placeholder")
+                }
+            }
         }
     }
     
