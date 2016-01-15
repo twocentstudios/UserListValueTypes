@@ -38,7 +38,14 @@ class UsersViewController: UITableViewController {
         usersViewModel.reloadIndexPathsSignal
             .observeOn(UIScheduler())
             .observeNext { [weak tableView] indexPaths in
-                tableView?.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+                guard let tableView = tableView, indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return }
+                let visibleRowsSet = Set(indexPathsForVisibleRows)
+                let changedIndexPathsSet = Set(indexPaths)
+                let intersectingIndexPathsSet = visibleRowsSet.intersect(changedIndexPathsSet)
+                let intersectingIndexPaths = Array(intersectingIndexPathsSet)
+                if !intersectingIndexPaths.isEmpty {
+                    tableView.reloadRowsAtIndexPaths(intersectingIndexPaths, withRowAnimation: .None)
+                }
             }
     }
     
