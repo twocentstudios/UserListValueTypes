@@ -35,6 +35,12 @@ struct UserViewModel {
         let errorUserViewModel = UserViewModel(user: self.user, avatarImageData: resource)
         return errorUserViewModel
     }
+    
+    func withLoading(progress: Float) -> UserViewModel {
+        let resource = self.avatarImageData.withOutput(.Loading(progress))
+        let loadingUserViewModel = UserViewModel(user: self.user, avatarImageData: resource)
+        return loadingUserViewModel
+    }
 }
 
 extension UserViewModel: Identifiable {}
