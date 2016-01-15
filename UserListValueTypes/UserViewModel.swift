@@ -8,16 +8,32 @@ import Foundation
 struct UserViewModel {
     let user: User
     let name: String
-    let avatarImageData: NSData?
+    let avatarImageData: AsyncResource<NSURL, NSData>
     
-    init(user: User, avatarImageData: NSData?) {
+    init(user: User) {
+        self.init(user: user, avatarImageData: AsyncResource(input: user.avatarURL, output: AsyncResourceState.Empty))
+    }
+    
+    init(user: User, avatarImageData: AsyncResource<NSURL, NSData>) {
         self.user = user
         self.name = user.name
         self.avatarImageData = avatarImageData
     }
     
-    func shouldFetchImage() -> Bool {
-        return avatarImageData == nil
+    func shouldFetchAvatarImage() -> Bool {
+        return avatarImageData.shouldFetch()
+    }
+    
+    func withData(data: NSData) -> UserViewModel {
+        let resource = self.avatarImageData.withOutput(.Loaded(data))
+        let loadedUserViewModel = UserViewModel(user: self.user, avatarImageData: resource)
+        return loadedUserViewModel
+    }
+    
+    func withError(error: NSError) -> UserViewModel {
+        let resource = self.avatarImageData.withOutput(.Error(error))
+        let errorUserViewModel = UserViewModel(user: self.user, avatarImageData: resource)
+        return errorUserViewModel
     }
 }
 
