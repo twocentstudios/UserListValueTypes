@@ -14,9 +14,10 @@ class UserCell: UITableViewCell {
     var userViewModel: UserViewModel? {
         didSet {
             self.textLabel?.text = userViewModel?.name ?? ""
+            
             self.avatarImageView.image = userViewModel.flatMap { viewModel in
                 switch viewModel.avatarImageData.output {
-                case .Empty: return UIImage(named: "placeholder")
+                case .Empty: return nil
                 case .Error: return nil
                 case .Loaded(let data): return UIImage(data: data)
                 case .Loading: return nil
@@ -25,10 +26,10 @@ class UserCell: UITableViewCell {
             
             self.avatarImageView.backgroundColor = userViewModel.flatMap { viewModel in
                 switch viewModel.avatarImageData.output {
-                case .Empty: return .whiteColor()
+                case .Empty: return UIColor(patternImage: UIImage(named: "placeholder")!)
                 case .Error: return .redColor()
                 case .Loaded: return .whiteColor()
-                case .Loading: return .grayColor()
+                case .Loading: return UIColor(patternImage: UIImage(named: "placeholder")!)
                 }
             }
             
@@ -44,7 +45,7 @@ class UserCell: UITableViewCell {
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         avatarImageView = UIImageView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
