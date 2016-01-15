@@ -9,7 +9,8 @@ import ReactiveCocoa
 class ImageController {
     func loadImageDataProducer(url: NSURL) -> SignalProducer<NSData, NSError> {
         return SignalProducer { observer, disposable in
-            if let image = ImageController.loadImageData(url) {
+            let simulateRandomFailure = false // (arc4random_uniform(5) == 0)
+            if let image = ImageController.loadImageData(url) where simulateRandomFailure == false {
                 observer.sendNext(image)
                 observer.sendCompleted()
             } else {
