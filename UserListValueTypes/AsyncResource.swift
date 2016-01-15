@@ -16,7 +16,7 @@ struct AsyncResource<InputType, OutputType> {
         case .Empty: return true
         case .Loading: return false
         case .Loaded: return false
-        case .Error: return true
+        case .Error: return false
         }
     }
 }
