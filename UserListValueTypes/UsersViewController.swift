@@ -68,6 +68,10 @@ class UsersViewController: UITableViewController {
         cell.userViewModel = usersViewModel.userViewModels?[indexPath.row]
         usersViewModel.activateIndexPath(indexPath)
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 
 }
 
