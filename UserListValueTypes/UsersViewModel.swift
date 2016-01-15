@@ -6,6 +6,11 @@
 import Foundation
 import ReactiveCocoa
 
+/// UsersViewModel is a reference-type paired with a corresponding high-level reference-type from the View layer.
+///
+/// In this simple representation, it exposes only an array of viewModels and a few functions to manipulate them.
+///
+/// The View layer can observe changes to the userViewModels array via two signals: reloadSignal and reloadIndexPathsSignal.
 class UsersViewModel {
     
     /// The cononical list of UserViewModels vended to UsersViewController.
@@ -32,14 +37,14 @@ class UsersViewModel {
     
     /// All updates to userViewModels should be performed on this queue.
     /// TODO: should this be QueueScheduler.mainQueueScheduler because that's where userViewModels is observed?
-    let viewModelsQueue = QueueScheduler(qos: QOS_CLASS_USER_INITIATED, name: "com.twocentstudios.UserList.viewmodels")
+    private let viewModelsQueue = QueueScheduler(qos: QOS_CLASS_USER_INITIATED, name: "com.twocentstudios.UserList.viewmodels")
     
     /// A general queue for performing view model fetching and transformations.
-    let workQueue = QueueScheduler(qos: QOS_CLASS_DEFAULT, name: "com.twocentstudios.UserList.work")
+    private let workQueue = QueueScheduler(qos: QOS_CLASS_DEFAULT, name: "com.twocentstudios.UserList.work")
     
     /// All image requests run on this queue.
     /// TODO: Figure out how to make this a concurrent queue.
-    let imageQueue = QueueScheduler(qos: QOS_CLASS_DEFAULT, name: "com.twocentstudios.UserList.image")
+    private let imageQueue = QueueScheduler(qos: QOS_CLASS_DEFAULT, name: "com.twocentstudios.UserList.image")
     
     init(userController: UserController, imageController: ImageController) {
         self.userController = userController
