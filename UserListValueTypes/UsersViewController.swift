@@ -6,8 +6,10 @@
 import UIKit
 import ReactiveCocoa
 
-class UsersViewController: UITableViewController {
+/// UsersViewController shows a list of users and their avatar images in a standard UITableView.
+final class UsersViewController: UITableViewController {
 
+    /// userViewModel is an immutable reference type whose internal parameters are expected to change.
     let usersViewModel: UsersViewModel
     
     init(usersViewModel: UsersViewModel) {
@@ -29,12 +31,16 @@ class UsersViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        /// reloadSignal triggers a full tableView reload.
         usersViewModel.reloadSignal
             .observeOn(UIScheduler())
             .observeNext { [weak tableView] _ in
                 tableView?.reloadData()
             }
         
+        /// reloadIndexPathsSignal triggers only the reload of indicies that have changed as determined by the view model.
+        /// Additionally, we intersect with the visible rows as to not refresh rows that are not in the current viewport.
+        /// The view controller could arguably ask for the view model to do this calculation for it.
         usersViewModel.reloadIndexPathsSignal
             .observeOn(UIScheduler())
             .observeNext { [weak tableView] indexPaths in
@@ -49,12 +55,16 @@ class UsersViewController: UITableViewController {
             }
     }
     
+    /// Naively fetch the underlying user data on each viewDidAppear.
+    /// We could optimize this depending on the use case.
     override func viewDidAppear(animated: Bool) {
         usersViewModel.fetchUserViewModels()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
+        // TODO: tell the viewModel which indexPaths are visible so it may clear the image data from the rest.
     }
     
     // MARK: - UITableViewDataSource
@@ -70,6 +80,7 @@ class UsersViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     
+    /// Pair a userViewModel with a userCell. Then alert the usersViewModel that this indexPath is now "active".
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let cell = cell as! UserCell
         cell.userViewModel = usersViewModel.userViewModels?[indexPath.row]

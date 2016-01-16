@@ -15,6 +15,7 @@ class UsersViewModel {
     
     /// The cononical list of UserViewModels vended to UsersViewController.
     /// Should only be updated on viewModelsQueue.
+    /// This could arguably be represented as an AsyncResource.
     var userViewModels: [UserViewModel]? = nil
     
     /// Data source of User objects.
