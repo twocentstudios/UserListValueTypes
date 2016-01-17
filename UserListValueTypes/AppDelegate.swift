@@ -11,9 +11,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        /// View -> ViewModel -> Controller
+        
         let imageController = ImageController()
         let userController = UserController()
+
+        /// ViewModel owns Controllers.
         let usersViewModel = UsersViewModel(userController: userController, imageController: imageController)
+        
+        /// ViewController owns ViewModel.
         let usersViewController = UsersViewController(usersViewModel: usersViewModel)
         
         let navigationController = UINavigationController(rootViewController: usersViewController)
