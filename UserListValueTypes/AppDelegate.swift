@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         /// View -> ViewModel -> Controller
         
-        let imageController = ImageController()
+        let imageController = ImageController(URLSession: NSURLSession.sharedSession())
         let userController = UserController()
 
         /// ViewModel owns Controllers.
