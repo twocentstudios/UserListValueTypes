@@ -41,16 +41,22 @@ final class UsersViewController: UITableViewController {
         /// reloadIndexPathsSignal triggers only the reload of indicies that have changed as determined by the view model.
         /// Additionally, we intersect with the visible rows as to not refresh rows that are not in the current viewport.
         /// The view controller could arguably ask for the view model to do this calculation for it.
+        /// Note, we set the view model on the cell directly instead of calling `tableView.reloadRowsAtIndexPaths` because the latter
+        /// will cause the tableView to recalculate its entire height on the main thread, causing stalls and poor performance.
         usersViewModel.reloadIndexPathsSignal
             .observeOn(UIScheduler())
-            .observeNext { [weak tableView] indexPaths in
-                guard let tableView = tableView, indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return }
+            .observeNext { [unowned self] indexPaths in
+                guard let tableView = self.tableView, indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return }
                 let visibleRowsSet = Set(indexPathsForVisibleRows)
                 let changedIndexPathsSet = Set(indexPaths)
                 let intersectingIndexPathsSet = visibleRowsSet.intersect(changedIndexPathsSet)
                 let intersectingIndexPaths = Array(intersectingIndexPathsSet)
                 if !intersectingIndexPaths.isEmpty {
-                    tableView.reloadRowsAtIndexPaths(intersectingIndexPaths, withRowAnimation: .None)
+                    intersectingIndexPaths.forEach { indexPath in
+                        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? UserCell {
+                            cell.userViewModel = self.userViewModelAtIndexPath(indexPath)
+                        }
+                    }
                 }
             }
     }
@@ -65,6 +71,12 @@ final class UsersViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         
         // TODO: tell the viewModel which indexPaths are visible so it may clear the image data from the rest.
+    }
+    
+    // MARK: - Private
+    
+    func userViewModelAtIndexPath(indexPath: NSIndexPath) -> UserViewModel? {
+        return usersViewModel.userViewModels?[indexPath.row]
     }
     
     // MARK: - UITableViewDataSource
@@ -83,7 +95,7 @@ final class UsersViewController: UITableViewController {
     /// Pair a userViewModel with a userCell. Then alert the usersViewModel that this indexPath is now "active".
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let cell = cell as! UserCell
-        cell.userViewModel = usersViewModel.userViewModels?[indexPath.row]
+        cell.userViewModel = userViewModelAtIndexPath(indexPath)
         usersViewModel.activateIndexPath(indexPath)
     }
     
